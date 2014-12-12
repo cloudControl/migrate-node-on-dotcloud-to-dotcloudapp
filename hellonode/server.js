@@ -17,4 +17,4 @@ http.createServer(function (req, res) {
     output += k + '=' + req.headers[k] + '\n'; 
   }
   res.end(output);
-}).listen(process.env['PORT_WWW'] || 8080);
+}).listen(process.env['PORT'] || 8080);
