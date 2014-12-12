@@ -1,19 +1,30 @@
-# Custom Node.js on dotCloud
+# Migrating Custom Node.js on dotCloud to Next dotCloud
 
-This is a custom service recipe to run *any* version of Node.js on dotCloud.
-To see it in action, just clone this repository and push it to dotCloud!
-To use it with your own code, copy the "nodejs" directory to your app,
-and append the content of dotcloud.yml to your dotcloud.yml file.
 
-You can set "approot" to the directory containing your Node code.
-This directory should contain "server.js" and "package.json".
+This example project demonstrates how you can easily prepare your [node-on-dotcloud](https://github.com/dotcloud/node-on-dotcloud) app for [Next dotCloud](https://next.dotcloudapp.com).
 
-If you want to use a custom version of Node, just set "node_version"
-as shown in the example. "node_version" is actually taken to be a
-tag in the Node.js github repository. If you specify "node_version",
-Node.js will be built the first time you push (it won't be rebuilt
-each time, because it will be compared to "node --version"). You
-can even specify "master", but in that case, Node.js will be rebuilt
-at each push.
+* Move `package.json` to your project root
+* Read the server port from environment variables
+* Create Procfile to start server
+* Remove all unnecessary legacy files
 
-Enjoy!
+You can follow all these steps in the git [history](./commits/master).
+
+Some application may need an older nodejs or npm version. If you haven't specified yours, you can add a **engines** section to your [package.json](https://docs.npmjs.com/files/package.json):
+~~~
+{
+    "name": "naive",
+    "description": "A package using naive versioning",
+    "author": "A confused individual <iam@confused.com>",
+    "version": "0.0.1",
+    "dependencies": {
+        "redis": "0.6.7"
+    },
+    "engines": {
+        "node": "0.10.33",
+        "npm": "2.1.11"
+    }
+}
+~~~
+
+With these changes you should be able to deploy your existing app on Next dotcloud. More migration guides for databases and other services are available in our [dev-center](https://next.dotcloud.com/dev-center/guides#migration-guides).
